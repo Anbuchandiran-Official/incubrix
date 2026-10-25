@@ -1,6 +1,6 @@
 # Assessment 2 engineering status
 
-This repository is an early, local prototype. The deterministic timeline engine and scripted session runner cover part of the assessment. This report records gaps plainly; the project is not ready to claim that all must-haves pass.
+This repository contains an early prototype for the Assessment 2 prompt-based video editing engine. The deterministic timeline engine and scripted session runner cover part of the assessment. The app is deployed from the `main` branch to Render as `incubrix-prompt-editor`; deployment does not mean the assessment must-haves pass.
 
 ## Implemented and locally checked
 
@@ -14,6 +14,7 @@ This repository is an early, local prototype. The deterministic timeline engine 
 - Numbered history entries can be restored explicitly; the restore itself is a history step.
 - The JSON session runner is covered by unit tests. Repeatable timeline states are represented by a SHA-256 `timeline_hash`.
 - Uploaded originals are stored under their SHA-256 and edits render to a separate output file. The UI exposes render and download controls.
+- The Render Blueprint deploys the Docker web service and exposes health and readiness routes. The deployed service uses the Render Free plan and ephemeral storage.
 - The FFmpeg renderer handles cuts, reordering, speed, captions, mute, and bleep. A local smoke run checked output duration and audio/video end alignment within one source frame.
 - Image generation, related endpoints and assets, API-key settings, and generation tests have been removed.
 
@@ -26,8 +27,8 @@ This repository is an early, local prototype. The deterministic timeline engine 
 
 ## Verification
 
-Earlier local verification recorded 29 passing tests and one renderer integration test skipped because `ffprobe` was unavailable. That run predates compound filler removal and does not verify the current change. A separate local FFmpeg smoke run exercised cuts, speed, reorder, caption, mute, and bleep and checked duration and stream alignment. These checks do not establish deployment readiness or full assessment compliance.
+Earlier local verification recorded 29 passing tests and one renderer integration test skipped because `ffprobe` was unavailable. That run predates compound filler removal and does not verify the current change. A separate local FFmpeg smoke run exercised cuts, speed, reorder, caption, mute, and bleep and checked duration and stream alignment. The Render dashboard later showed the deployed service as live; its health endpoint was not independently checked in this session. These checks do not establish full assessment compliance.
 
 ## Next work required before submission
 
-Expand instruction coverage and scripted media fixtures, add durable session/history storage, run the renderer integration suite with FFmpeg and FFprobe, and validate the integration standard and live demo before submitting evidence. Deployment also requires a Git remote connected in Render; this checkout currently has no commits or remote, so no hosted URL has been created.
+Expand instruction coverage and scripted media fixtures, add durable session/history storage, run the renderer integration suite with FFmpeg and FFprobe, and validate the integration standard and live demo before submitting evidence. Confirm the public hostname in the Render service page and keep the service and evidence links available for the full review period.
