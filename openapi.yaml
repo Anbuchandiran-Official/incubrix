@@ -1,0 +1,433 @@
+openapi: 3.1.0
+info:
+  title: IncuBrix Prompt-Based Video Editing Engine
+  version: 0.1.0
+paths:
+  /health:
+    get:
+      summary: Health
+      operationId: health_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: string
+                type: object
+                title: Response Health Health Get
+  /ready:
+    get:
+      summary: Ready
+      operationId: ready_ready_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: string
+                type: object
+                title: Response Ready Ready Get
+  /api/v1/sessions:
+    post:
+      summary: Create Session
+      operationId: create_session_api_v1_sessions_post
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          title: Idempotency-Key
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionInput'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Create Session Api V1 Sessions Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/v1/sessions/from-upload:
+    post:
+      summary: Create Session From Upload
+      operationId: create_session_from_upload_api_v1_sessions_from_upload_post
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          title: Idempotency-Key
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_create_session_from_upload_api_v1_sessions_from_upload_post'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Create Session From Upload Api V1 Sessions From Upload
+                  Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/v1/sessions/{session_id}:
+    get:
+      summary: Get Session
+      operationId: get_session_api_v1_sessions__session_id__get
+      parameters:
+      - name: session_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Session Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Get Session Api V1 Sessions  Session Id  Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/v1/sessions/{session_id}/edits:
+    post:
+      summary: Apply Edit
+      operationId: apply_edit_api_v1_sessions__session_id__edits_post
+      parameters:
+      - name: session_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Session Id
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          title: Idempotency-Key
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditInput'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Apply Edit Api V1 Sessions  Session Id  Edits Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/v1/sessions/{session_id}/instructions:
+    post:
+      summary: Apply Instruction
+      operationId: apply_instruction_api_v1_sessions__session_id__instructions_post
+      parameters:
+      - name: session_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Session Id
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          title: Idempotency-Key
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InstructionInput'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Apply Instruction Api V1 Sessions  Session Id  Instructions
+                  Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/v1/sessions/{session_id}/render:
+    post:
+      summary: Render Session
+      operationId: render_session_api_v1_sessions__session_id__render_post
+      parameters:
+      - name: session_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Session Id
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          title: Idempotency-Key
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Render Session Api V1 Sessions  Session Id  Render
+                  Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/v1/sessions/{session_id}/rendered:
+    get:
+      summary: Get Rendered Video
+      operationId: get_rendered_video_api_v1_sessions__session_id__rendered_get
+      parameters:
+      - name: session_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Session Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    Body_create_session_from_upload_api_v1_sessions_from_upload_post:
+      properties:
+        video:
+          type: string
+          format: binary
+          title: Video
+        source_duration_s:
+          type: number
+          title: Source Duration S
+        words_json:
+          type: string
+          title: Words Json
+          default: '[]'
+      type: object
+      required:
+      - video
+      - source_duration_s
+      title: Body_create_session_from_upload_api_v1_sessions_from_upload_post
+    EditInput:
+      properties:
+        operation:
+          type: string
+          enum:
+          - cut
+          - keep
+          - speed
+          - reorder
+          - caption
+          - mute
+          - bleep
+          - update_caption
+          - restore
+          - restore_edit
+          - undo
+          - redo
+          title: Operation
+        start_s:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Start S
+        end_s:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: End S
+        destination_s:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Destination S
+        speed:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Speed
+        text:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Text
+        word_ids:
+          items:
+            type: string
+          type: array
+          title: Word Ids
+        annotation_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Annotation Id
+        step:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Step
+        style:
+          additionalProperties: true
+          type: object
+          title: Style
+      type: object
+      required:
+      - operation
+      title: EditInput
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    InstructionInput:
+      properties:
+        text:
+          type: string
+          maxLength: 2000
+          minLength: 1
+          title: Text
+      type: object
+      required:
+      - text
+      title: InstructionInput
+    SessionInput:
+      properties:
+        source_duration_s:
+          type: number
+          exclusiveMinimum: 0.0
+          title: Source Duration S
+        words:
+          items:
+            $ref: '#/components/schemas/WordInput'
+          type: array
+          title: Words
+      type: object
+      required:
+      - source_duration_s
+      title: SessionInput
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    WordInput:
+      properties:
+        id:
+          type: string
+          title: Id
+        text:
+          type: string
+          title: Text
+        start:
+          type: number
+          minimum: 0.0
+          title: Start
+        end:
+          type: number
+          exclusiveMinimum: 0.0
+          title: End
+        speaker:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Speaker
+        confidence:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Confidence
+          default: 1.0
+      type: object
+      required:
+      - id
+      - text
+      - start
+      - end
+      title: WordInput

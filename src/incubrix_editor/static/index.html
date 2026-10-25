@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101311">
+  <title>IncuBrix Studio — Prompt Video Editor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="/assets/preview.css?v=6">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="rail" aria-label="Main navigation">
+      <a class="brand-mark" href="#" aria-label="IncuBrix Studio home"><span class="brand-glyph">i</span></a>
+      <div class="rail-rule"></div>
+      <button class="rail-item active" aria-label="Editor" title="Editor"><span>✳</span></button>
+      <button class="rail-item" aria-label="Timeline" title="Timeline"><span>▤</span></button>
+      <button class="rail-item" aria-label="History" title="History"><span>↶</span></button>
+      <div class="rail-spacer"></div>
+      <button class="rail-item help-button" aria-label="About this prototype" title="About this prototype">?</button>
+      <div class="avatar">S</div>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <div class="crumbs"><span class="crumb-muted">Workspace</span><span class="crumb-slash">/</span><span>Prompt editor</span></div>
+        <div class="topbar-right">
+          <span class="prototype-pill"><i></i> Prototype</span>
+          <span id="apiStatus" class="api-status"><i></i><span>Connecting</span></span>
+        </div>
+      </header>
+
+      <section class="page-heading">
+        <div>
+          <p class="eyebrow">INCUBRIX EDITOR <span>·</span> ASSESSMENT 02</p>
+          <h1>Make the edit.<br><em>Keep it precise.</em></h1>
+          <p class="heading-copy">Describe a change in plain language. Your timeline stays anchored to the original words.</p>
+        </div>
+        <div class="session-badge"><span class="session-icon">⌁</span><div><small>EDIT SESSION</small><strong id="sessionLabel">Not started</strong></div></div>
+      </section>
+
+      <section class="setup-card card" id="setupCard">
+        <div class="card-heading">
+          <div class="step-mark">01</div>
+          <div><h2>Start with a transcript</h2><p>Use sample data or paste word-timed transcript JSON.</p></div>
+          <button id="loadSample" class="text-button">Load sample <span>↗</span></button>
+        </div>
+        <div class="setup-grid">
+          <label class="duration-field"><span>VIDEO LENGTH <small>seconds</small></span><input id="durationInput" type="number" min="1" value="60"></label>
+          <label class="transcript-field"><span>WORD-LEVEL TRANSCRIPT <small>JSON</small></span><textarea id="transcriptInput" spellcheck="false" aria-label="Transcript JSON"></textarea></label>
+        </div>
+        <div class="setup-footer"><label class="video-picker">SOURCE VIDEO <input id="videoInput" type="file" accept="video/*"></label><span class="quiet-note"><span class="tiny-spark">✳</span> Preview is the untouched source; edits are shown on the timeline.</span><span id="sourceHashLabel" class="mono" title="">Source SHA-256 appears here</span><button id="createSession" class="primary-button">Create editing session <span>→</span></button></div>
+        <p id="setupError" class="error-line" role="alert"></p>
+      </section>
+
+      <section id="editorSection" class="editor-grid hidden">
+        <div class="left-column">
+          <section class="preview-card card">
+            <div class="card-heading compact">
+              <div class="step-mark">02</div><div><h2>Timeline</h2><p>Source time · current edit order</p></div>
+              <button id="refreshTimeline" class="icon-button" aria-label="Refresh timeline" title="Refresh">↻</button>
+              <button id="renderVideo" class="text-button" disabled>Render edit</button>
+            </div>
+            <div class="preview-stage">
+              <video id="sourceVideo" class="source-video hidden" controls playsinline></video>
+              <div id="videoCaption" class="video-caption hidden"></div>
+              <div class="stage-grid"></div>
+              <div id="stagePlaceholder" class="stage-center"><div class="play-orbit">▶</div><span>No source video selected</span><small>Choose a video above to preview captions</small></div>
+              <div class="stage-corner top-left">SOURCE · <span id="sourceDurationLabel">00:60</span></div>
+              <div class="stage-corner bottom-right">16:9 <span>·</span> ORIGINAL</div>
+            </div>
+            <div class="timeline-meta"><span><i class="legend-kept"></i> Kept</span><span><i class="legend-cut"></i> Cut</span><span class="mono" id="currentDurationLabel">0:60 current</span></div>
+            <div id="timelineTrack" class="timeline-track" aria-label="Edited timeline"></div>
+            <div id="annotationList" class="annotation-list"></div>
+            <a id="downloadVideo" class="text-button hidden" download>Download rendered video</a>
+          </section>
+
+          <section class="activity-card card">
+            <div class="card-heading compact"><div class="step-mark">03</div><div><h2>Edit history</h2><p>Each action can be undone</p></div><span class="history-count" id="historyCount">0 edits</span></div>
+            <div id="historyList" class="history-list"><div class="empty-state">Your edits will appear here.</div></div>
+          </section>
+        </div>
+
+        <section class="assistant-card card">
+          <div class="assistant-head"><div class="assistant-orb">✳</div><div><h2>Editor assistant</h2><p><span class="online-dot"></span> Ready for an instruction</p></div><button class="more-button" aria-label="More options">···</button></div>
+          <div id="conversation" class="conversation" aria-live="polite">
+            <div class="date-divider"><span>SESSION STARTED</span></div>
+            <div class="assistant-message"><div class="message-mark">✳</div><div class="message-body"><div class="message-author">Editor <time>now</time></div><div class="bubble assistant-bubble">Your transcript is on the timeline. Tell me what you’d like to change. If a phrase appears more than once, I’ll ask which one.</div><div class="suggestions"><button class="suggestion-chip">Remove the part about pricing</button><button class="suggestion-chip">Add a caption 'Coming soon' when I say pricing</button><button class="suggestion-chip">Undo</button></div></div></div>
+          </div>
+          <div class="composer-wrap">
+            <div class="composer-hint"><span>Try a specific edit</span><span><kbd>Enter</kbd> to send</span></div>
+            <div class="composer"><textarea id="instructionInput" rows="1" placeholder="Tell me what to change…" disabled></textarea><button id="sendInstruction" class="send-button" aria-label="Send instruction" disabled>↑</button></div>
+            <div class="composer-foot"><span><span class="spark-small">✳</span> Timeline edits are deterministic</span><span id="pendingHint"></span></div>
+          </div>
+        </section>
+      </section>
+      <footer class="footer"><span>INCU<span class="footer-accent">BRIX</span> STUDIO</span><span>Timeline prototype <b>·</b> Original-time policy</span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="/assets/app.js?v=6" defer></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "incubrix-prompt-editor"
+version = "0.1.0"
+description = "Deterministic timeline engine for prompt-based video editing"
+requires-python = ">=3.11"
+dependencies = ["fastapi>=0.115,<0.116", "uvicorn[standard]>=0.30,<0.35", "pydantic>=2.6,<3", "python-dotenv>=1,<2", "python-multipart>=0.0.20,<1", "imageio-ffmpeg>=0.5,<1"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9"]
+
+[project.scripts]
+incubrix-session = "incubrix_editor.session_runner:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+incubrix_editor = ["static/*.html", "static/*.css", "static/*.js", "static/*.svg"]
+

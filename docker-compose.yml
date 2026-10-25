@@ -1,0 +1,17 @@
+services:
+  editor-api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - INCUBRIX_DATA_DIR=/data
+    volumes:
+      - editor-data:/data
+  tests:
+    build: .
+    profiles: ["test"]
+    command: ["pytest", "-q"]
+volumes:
+  editor-data:
+

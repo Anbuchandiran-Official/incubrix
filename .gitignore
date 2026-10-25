@@ -1,0 +1,13 @@
+__pycache__/
+.pytest_cache/
+.pytest-tmp/
+.codex-test-deps/
+*.egg-info/
+*.py[cod]
+.venv/
+.env
+data/
+outputs/
+*.mp4
+*.mov
+

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: incubrix-prompt-editor
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: INCUBRIX_DATA_DIR
+        value: /tmp/incubrix-data

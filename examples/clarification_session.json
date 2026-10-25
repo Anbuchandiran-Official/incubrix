@@ -1,0 +1,18 @@
+{
+  "source_duration_s": 60,
+  "words": [
+    {"id": "w1", "text": "Pricing", "start": 8.0, "end": 8.4, "speaker": "host"},
+    {"id": "w2", "text": "is", "start": 8.4, "end": 8.55, "speaker": "host"},
+    {"id": "w3", "text": "flexible", "start": 8.55, "end": 9.0, "speaker": "host"},
+    {"id": "w4", "text": "Pricing", "start": 36.0, "end": 36.4, "speaker": "host"},
+    {"id": "w5", "text": "starts", "start": 36.4, "end": 36.75, "speaker": "host"},
+    {"id": "w6", "text": "at", "start": 36.75, "end": 36.9, "speaker": "host"},
+    {"id": "w7", "text": "ten", "start": 36.9, "end": 37.2, "speaker": "host"}
+  ],
+  "steps": [
+    {"say": "Add a caption 'Flexible pricing' when I say pricing is flexible"},
+    {"say": "Remove the part about pricing"},
+    {"answer": "the second one"},
+    {"say": "Undo"}
+  ]
+}

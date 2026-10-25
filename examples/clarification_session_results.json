@@ -1,0 +1,188 @@
+{
+  "results": [
+    {
+      "step": 1,
+      "status": "applied",
+      "operations": [
+        {
+          "say": "Add a caption 'Flexible pricing' when I say pricing is flexible"
+        }
+      ],
+      "summary": {
+        "status": "applied",
+        "operations": [
+          {
+            "operation": "caption",
+            "text": "Flexible pricing",
+            "word_ids": [
+              "w1",
+              "w2",
+              "w3"
+            ]
+          }
+        ],
+        "summary": {
+          "annotation_id": "caption-1"
+        }
+      },
+      "message": null,
+      "timeline_hash": "57f1d44c92c64472f262d5008942fa44b7c4e56464e4f54dcd9003caa91dffa2",
+      "duration_s": 60.0
+    },
+    {
+      "step": 2,
+      "status": "needs_clarification",
+      "operations": [],
+      "summary": {
+        "status": "needs_clarification",
+        "question": "I found 2 matches for 'pricing'. Which one should I use?",
+        "options": [
+          "8.00s: Pricing",
+          "36.00s: Pricing"
+        ],
+        "message": null
+      },
+      "message": null,
+      "timeline_hash": "57f1d44c92c64472f262d5008942fa44b7c4e56464e4f54dcd9003caa91dffa2",
+      "duration_s": 60.0
+    },
+    {
+      "step": 3,
+      "status": "applied",
+      "operations": [
+        {
+          "answer": "the second one"
+        }
+      ],
+      "summary": {
+        "status": "applied",
+        "operations": [
+          {
+            "operation": "cut",
+            "start_s": 36.0,
+            "end_s": 36.4,
+            "matched_word_ids": [
+              "w4"
+            ]
+          }
+        ],
+        "summary": {
+          "removed_s": 0.4,
+          "duration_s": 59.6
+        }
+      },
+      "message": null,
+      "timeline_hash": "ff9da017302043c906d0f4a89a5f9459e32c81baa802e5e23ba650f852b4d380",
+      "duration_s": 59.6
+    },
+    {
+      "step": 4,
+      "status": "applied",
+      "operations": [
+        {
+          "say": "Undo"
+        }
+      ],
+      "summary": {
+        "status": "applied",
+        "operations": [
+          {
+            "operation": "undo"
+          }
+        ],
+        "summary": {
+          "reversed": "cut 36-36.4"
+        }
+      },
+      "message": null,
+      "timeline_hash": "57f1d44c92c64472f262d5008942fa44b7c4e56464e4f54dcd9003caa91dffa2",
+      "duration_s": 60.0
+    }
+  ],
+  "final_timeline": {
+    "source_duration_s": 60.0,
+    "duration_s": 60.0,
+    "time_policy": "original source time for all instructions",
+    "segments": [
+      {
+        "source_start": 0.0,
+        "source_end": 60.0,
+        "speed": 1.0
+      }
+    ],
+    "words": [
+      {
+        "id": "w1",
+        "text": "Pricing",
+        "start": 8.0,
+        "end": 8.4,
+        "speaker": "host",
+        "confidence": 1.0
+      },
+      {
+        "id": "w2",
+        "text": "is",
+        "start": 8.4,
+        "end": 8.55,
+        "speaker": "host",
+        "confidence": 1.0
+      },
+      {
+        "id": "w3",
+        "text": "flexible",
+        "start": 8.55,
+        "end": 9.0,
+        "speaker": "host",
+        "confidence": 1.0
+      },
+      {
+        "id": "w4",
+        "text": "Pricing",
+        "start": 36.0,
+        "end": 36.4,
+        "speaker": "host",
+        "confidence": 1.0
+      },
+      {
+        "id": "w5",
+        "text": "starts",
+        "start": 36.4,
+        "end": 36.75,
+        "speaker": "host",
+        "confidence": 1.0
+      },
+      {
+        "id": "w6",
+        "text": "at",
+        "start": 36.75,
+        "end": 36.9,
+        "speaker": "host",
+        "confidence": 1.0
+      },
+      {
+        "id": "w7",
+        "text": "ten",
+        "start": 36.9,
+        "end": 37.2,
+        "speaker": "host",
+        "confidence": 1.0
+      }
+    ],
+    "annotations": [
+      {
+        "id": "caption-1",
+        "kind": "caption",
+        "start": 8.0,
+        "end": 9.0,
+        "text": "Flexible pricing",
+        "style": {},
+        "word_ids": [
+          "w1",
+          "w2",
+          "w3"
+        ]
+      }
+    ],
+    "timeline_hash": "57f1d44c92c64472f262d5008942fa44b7c4e56464e4f54dcd9003caa91dffa2"
+  }
+}
